@@ -1,13 +1,31 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-15T13:47:54Z"
+  version: "2016-04-15T14:48:34Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
 schemes:
 - "https"
 paths:
+  /:
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
   /version:
     get:
       produces:
@@ -19,18 +37,15 @@ paths:
             $ref: "#/definitions/Version"
       security:
       - MainStaging: []
-      - api_key: []
 securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "x-api-key"
-    in: "header"
   MainStaging:
     type: "apiKey"
     name: "X-Api-Key"
     in: "header"
     x-amazon-apigateway-authtype: "custom"
 definitions:
+  Empty:
+    type: "object"
   Version:
     type: "object"
     required:
