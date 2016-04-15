@@ -20,13 +20,6 @@ paths:
       security:
       - MainStaging: []
       - api_key: []
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:129511209983:function:mypbx-rest-version-staging/invocations"
-        httpMethod: "POST"
-        type: "aws"
 securityDefinitions:
   api_key:
     type: "apiKey"
