@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-15T14:48:34Z"
+  version: "2016-04-15T15:04:43Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
@@ -20,9 +20,13 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
           headers:
+            Access-Control-Expose-Headers:
+              type: "string"
             Access-Control-Allow-Origin:
               type: "string"
             Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
               type: "string"
             Access-Control-Allow-Headers:
               type: "string"
