@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-15T16:24:24Z"
+  version: "2016-04-15T16:32:21Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
@@ -36,6 +36,8 @@ paths:
             Access-Control-Allow-Origin:
               type: "string"
             Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
               type: "string"
             Access-Control-Allow-Headers:
               type: "string"
