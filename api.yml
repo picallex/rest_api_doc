@@ -1,14 +1,27 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-15T15:18:58Z"
+  version: "2016-04-15T16:24:24Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
 schemes:
 - "https"
 paths:
-  /:
+  /version:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Version"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - MainStaging: []
     options:
       consumes:
       - "application/json"
@@ -20,27 +33,12 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
           headers:
-            Access-Control-Expose-Headers:
-              type: "string"
             Access-Control-Allow-Origin:
               type: "string"
             Access-Control-Allow-Methods:
               type: "string"
-            Access-Control-Allow-Credentials:
-              type: "string"
             Access-Control-Allow-Headers:
               type: "string"
-      security:
-      - MainStaging: []
-  /version:
-    get:
-      produces:
-      - "application/json"
-      responses:
-        200:
-          description: "200 response"
-          schema:
-            $ref: "#/definitions/Version"
       security:
       - MainStaging: []
 securityDefinitions:
