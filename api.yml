@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-14T23:03:53Z"
+  version: "2016-04-15T13:47:54Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
@@ -16,10 +16,17 @@ paths:
         200:
           description: "200 response"
           schema:
-            $ref: "#/definitions/Empty"
+            $ref: "#/definitions/Version"
       security:
       - MainStaging: []
       - api_key: []
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:129511209983:function:mypbx-rest-version-staging/invocations"
+        httpMethod: "POST"
+        type: "aws"
 securityDefinitions:
   api_key:
     type: "apiKey"
@@ -31,5 +38,11 @@ securityDefinitions:
     in: "header"
     x-amazon-apigateway-authtype: "custom"
 definitions:
-  Empty:
+  Version:
     type: "object"
+    required:
+    - "version"
+    properties:
+      version:
+        type: "string"
+        pattern: "^(\\d+\\.\\d+\\.\\d+)$"
