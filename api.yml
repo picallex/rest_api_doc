@@ -1,27 +1,102 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-15T16:42:54Z"
+  version: "2016-04-22T00:32:41Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
 schemes:
 - "https"
 paths:
+  /acl:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+      security:
+      - ApiKeyStaging: []
+    delete:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+      security:
+      - ApiKeyStaging: []
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+    patch:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "PatchACLRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/PatchACLRequest"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+      security:
+      - ApiKeyStaging: []
   /version:
     get:
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
       responses:
         200:
           description: "200 response"
           schema:
-            $ref: "#/definitions/Version"
+            $ref: "#/definitions/VersionResponse"
           headers:
             Access-Control-Allow-Origin:
               type: "string"
+        500:
+          description: "500 response"
       security:
-      - MainStaging: []
+      - ApiKeyStaging: []
     options:
       consumes:
       - "application/json"
@@ -31,7 +106,7 @@ paths:
         200:
           description: "200 response"
           schema:
-            $ref: "#/definitions/Empty"
+            $ref: "#/definitions/EmptyResponse"
           headers:
             Access-Control-Expose-Headers:
               type: "string"
@@ -44,19 +119,23 @@ paths:
             Access-Control-Allow-Headers:
               type: "string"
 securityDefinitions:
-  MainStaging:
+  ApiKeyStaging:
     type: "apiKey"
     name: "X-Api-Key"
     in: "header"
     x-amazon-apigateway-authtype: "custom"
 definitions:
-  Empty:
+  VersionResponse:
     type: "object"
-  Version:
-    type: "object"
-    required:
-    - "version"
     properties:
       version:
         type: "string"
         pattern: "^(\\d+\\.\\d+\\.\\d+)$"
+  PatchACLRequest:
+    type: "object"
+    properties:
+      cidr:
+        type: "string"
+        pattern: "^(\\d+\\.\\d+\\.\\d+.\\d+/\\d+)$"
+  EmptyResponse:
+    type: "object"
