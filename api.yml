@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-22T00:32:41Z"
+  version: "2016-04-22T17:45:54Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
@@ -14,21 +14,38 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
       responses:
         200:
           description: "200 response"
+          schema:
+            $ref: "#/definitions/ACLResponse"
           headers:
             Access-Control-Allow-Origin:
               type: "string"
         500:
           description: "500 response"
-      security:
-      - ApiKeyStaging: []
+        401:
+          description: "401 response"
     delete:
       consumes:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "ACLRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/ACLRequest"
       responses:
         200:
           description: "200 response"
@@ -39,8 +56,8 @@ paths:
           description: "400 response"
         500:
           description: "500 response"
-      security:
-      - ApiKeyStaging: []
+        401:
+          description: "401 response"
     options:
       consumes:
       - "application/json"
@@ -62,29 +79,46 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
       - in: "body"
-        name: "PatchACLRequest"
+        name: "ACLRequest"
         required: true
         schema:
-          $ref: "#/definitions/PatchACLRequest"
+          $ref: "#/definitions/ACLRequest"
       responses:
         200:
           description: "200 response"
+          schema:
+            $ref: "#/definitions/EmptyResponse"
           headers:
             Access-Control-Allow-Origin:
               type: "string"
         400:
           description: "400 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         500:
           description: "500 response"
-      security:
-      - ApiKeyStaging: []
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /version:
     get:
       consumes:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
       responses:
         200:
           description: "200 response"
@@ -95,8 +129,12 @@ paths:
               type: "string"
         500:
           description: "500 response"
-      security:
-      - ApiKeyStaging: []
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     options:
       consumes:
       - "application/json"
@@ -118,12 +156,6 @@ paths:
               type: "string"
             Access-Control-Allow-Headers:
               type: "string"
-securityDefinitions:
-  ApiKeyStaging:
-    type: "apiKey"
-    name: "X-Api-Key"
-    in: "header"
-    x-amazon-apigateway-authtype: "custom"
 definitions:
   VersionResponse:
     type: "object"
@@ -131,11 +163,35 @@ definitions:
       version:
         type: "string"
         pattern: "^(\\d+\\.\\d+\\.\\d+)$"
-  PatchACLRequest:
+  ACE:
     type: "object"
     properties:
-      cidr:
+      mask:
+        type: "number"
+        minimum: 16.0
+        maximum: 32.0
+        exclusiveMinimum: false
+        exclusiveMaximum: false
+      network:
         type: "string"
-        pattern: "^(\\d+\\.\\d+\\.\\d+.\\d+/\\d+)$"
+  ACLResponse:
+    type: "object"
+    properties:
+      acl:
+        type: "array"
+        items:
+          $ref: "#/definitions/ACE"
+  ACLRequest:
+    type: "object"
+    properties:
+      ace:
+        $ref: "#/definitions/ACE"
   EmptyResponse:
     type: "object"
+  ErrorResponse:
+    type: "object"
+    properties:
+      errors:
+        type: "array"
+        items:
+          type: "string"
