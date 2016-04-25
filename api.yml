@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-25T18:37:01Z"
+  version: "2016-04-25T18:45:07Z"
   title: "v0"
 host: "api-staging.vip2phone.net"
 basePath: "/v0"
@@ -229,24 +229,27 @@ definitions:
       email:
         type: "string"
         format: "email"
-      state:
-        type: "string"
-        enum:
-        - "green"
-        - "failed"
-        - "red"
-      systemStatus:
-        type: "string"
-        enum:
-        - "green"
-        - "failed"
-        - "red"
-      instanceStatus:
-        type: "string"
-        enum:
-        - "green"
-        - "failed"
-        - "red"
+      pbx:
+        type: "object"
+        properties:
+          systemStatus:
+            type: "string"
+            enum:
+            - "green"
+            - "failed"
+            - "red"
+          state:
+            type: "string"
+            enum:
+            - "green"
+            - "failed"
+            - "red"
+          instanceStatus:
+            type: "string"
+            enum:
+            - "green"
+            - "failed"
+            - "red"
   ACLRequest:
     type: "object"
     properties:
