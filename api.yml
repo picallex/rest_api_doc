@@ -1,9 +1,9 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-25T18:45:07Z"
+  version: "2016-04-25T18:50:45Z"
   title: "v0"
-host: "api-staging.vip2phone.net"
+host: "api.vip2phone.net"
 basePath: "/v0"
 schemes:
 - "https"
