@@ -1,9 +1,9 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-22T21:15:54Z"
+  version: "2016-04-25T18:37:01Z"
   title: "v0"
-host: "api.vip2phone.net"
+host: "api-staging.vip2phone.net"
 basePath: "/v0"
 schemes:
 - "https"
@@ -108,6 +108,48 @@ paths:
           description: "401 response"
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /me:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Me"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
   /version:
     get:
       consumes:
@@ -167,7 +209,7 @@ definitions:
     type: "object"
     properties:
       mask:
-        type: "number"
+        type: "integer"
         minimum: 16.0
         maximum: 32.0
         exclusiveMinimum: false
@@ -181,6 +223,30 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/ACE"
+  Me:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+      state:
+        type: "string"
+        enum:
+        - "green"
+        - "failed"
+        - "red"
+      systemStatus:
+        type: "string"
+        enum:
+        - "green"
+        - "failed"
+        - "red"
+      instanceStatus:
+        type: "string"
+        enum:
+        - "green"
+        - "failed"
+        - "red"
   ACLRequest:
     type: "object"
     properties:
