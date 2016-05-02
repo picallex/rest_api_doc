@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-04-25T18:50:45Z"
+  version: "2016-05-02T20:45:43Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -29,8 +29,12 @@ paths:
               type: "string"
         500:
           description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         401:
           description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       consumes:
       - "application/json"
@@ -150,6 +154,48 @@ paths:
               type: "string"
             Access-Control-Allow-Headers:
               type: "string"
+  /queues:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/QueuesResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
   /version:
     get:
       consumes:
@@ -199,6 +245,20 @@ paths:
             Access-Control-Allow-Headers:
               type: "string"
 definitions:
+  QueuesResponse:
+    type: "object"
+    properties:
+      queues:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            number:
+              type: "integer"
+              minimum: 0.0
+              exclusiveMinimum: true
+            name:
+              type: "string"
   VersionResponse:
     type: "object"
     properties:
