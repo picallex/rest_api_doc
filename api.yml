@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-05-02T20:45:43Z"
+  version: "2016-05-03T22:43:39Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -112,6 +112,97 @@ paths:
           description: "401 response"
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /extensions:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ExtensionsResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /extensions/{id}:
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+    patch:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "ExtensionsRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/ExtensionsRequest"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+        401:
+          description: "401 response"
+        404:
+          description: "404 response"
   /me:
     get:
       consumes:
@@ -259,6 +350,21 @@ definitions:
               exclusiveMinimum: true
             name:
               type: "string"
+            id:
+              type: "integer"
+              minimum: 0.0
+              exclusiveMinimum: true
+  ExtensionsRequest:
+    type: "object"
+    properties:
+      settings:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+            minLength: 2
+            maxLength: 64
+            pattern: "^[a-zA-Z0-9 ]$"
   VersionResponse:
     type: "object"
     properties:
@@ -315,6 +421,24 @@ definitions:
     properties:
       ace:
         $ref: "#/definitions/ACE"
+  ExtensionsResponse:
+    type: "object"
+    properties:
+      extensions:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            number:
+              type: "integer"
+              minimum: 0.0
+              exclusiveMinimum: true
+            name:
+              type: "string"
+            id:
+              type: "integer"
+              minimum: 0.0
+              exclusiveMinimum: true
   EmptyResponse:
     type: "object"
   ErrorResponse:
