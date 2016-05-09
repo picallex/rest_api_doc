@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-05-09T17:11:55Z"
+  version: "2016-05-09T21:00:37Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -120,6 +120,92 @@ paths:
           description: "401 response"
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /blacklist/{id}:
+    put:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "EmptyRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/EmptyRequest"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/EmptyResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "EmptyRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/EmptyRequest"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/EmptyResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
   /dids:
     get:
       consumes:
@@ -403,6 +489,14 @@ paths:
             Access-Control-Allow-Headers:
               type: "string"
   /queues/{id}:
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
     patch:
       consumes:
       - "application/json"
@@ -427,6 +521,9 @@ paths:
           description: "200 response"
           schema:
             $ref: "#/definitions/EmptyResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
         400:
           description: "400 response"
           schema:
@@ -492,6 +589,54 @@ paths:
             Access-Control-Allow-Headers:
               type: "string"
 definitions:
+  VersionResponse:
+    type: "object"
+    properties:
+      version:
+        type: "string"
+        pattern: "^(\\d+\\.\\d+\\.\\d+)$"
+  ACE:
+    type: "object"
+    properties:
+      mask:
+        type: "integer"
+        minimum: 16.0
+        maximum: 32.0
+        exclusiveMinimum: false
+        exclusiveMaximum: false
+      network:
+        type: "string"
+  ACLResponse:
+    type: "object"
+    properties:
+      acl:
+        type: "array"
+        items:
+          $ref: "#/definitions/ACE"
+  DidsResponse:
+    type: "object"
+    properties:
+      queues:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            behavior:
+              type: "string"
+            did:
+              type: "string"
+  ACLRequest:
+    type: "object"
+    properties:
+      ace:
+        $ref: "#/definitions/ACE"
+  ErrorResponse:
+    type: "object"
+    properties:
+      errors:
+        type: "array"
+        items:
+          type: "string"
   QueuesResponse:
     type: "object"
     properties:
@@ -542,30 +687,6 @@ definitions:
         properties:
           behavior:
             type: "string"
-  VersionResponse:
-    type: "object"
-    properties:
-      version:
-        type: "string"
-        pattern: "^(\\d+\\.\\d+\\.\\d+)$"
-  ACE:
-    type: "object"
-    properties:
-      mask:
-        type: "integer"
-        minimum: 16.0
-        maximum: 32.0
-        exclusiveMinimum: false
-        exclusiveMaximum: false
-      network:
-        type: "string"
-  ACLResponse:
-    type: "object"
-    properties:
-      acl:
-        type: "array"
-        items:
-          $ref: "#/definitions/ACE"
   Me:
     type: "object"
     properties:
@@ -593,23 +714,8 @@ definitions:
             - "green"
             - "failed"
             - "red"
-  DidsResponse:
+  EmptyRequest:
     type: "object"
-    properties:
-      queues:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            behavior:
-              type: "string"
-            did:
-              type: "string"
-  ACLRequest:
-    type: "object"
-    properties:
-      ace:
-        $ref: "#/definitions/ACE"
   ExtensionsResponse:
     type: "object"
     properties:
@@ -632,10 +738,3 @@ definitions:
               type: "boolean"
   EmptyResponse:
     type: "object"
-  ErrorResponse:
-    type: "object"
-    properties:
-      errors:
-        type: "array"
-        items:
-          type: "string"
