@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-05-09T21:00:37Z"
+  version: "2016-05-13T11:31:53Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -196,6 +196,11 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
       responses:
         200:
           description: "200 response"
@@ -254,6 +259,11 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
       responses:
         200:
           description: "200 response"
@@ -351,6 +361,11 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
       responses:
         200:
           description: "200 response"
@@ -494,9 +509,21 @@ paths:
       - "application/json"
       produces:
       - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
       responses:
         200:
           description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
     patch:
       consumes:
       - "application/json"
