@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-05-13T11:31:53Z"
+  version: "2016-08-20T22:10:30Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -488,21 +488,47 @@ paths:
           description: "401 response"
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "QueuesRequest"
+        required: true
+        schema:
+          $ref: "#/definitions/QueuesRequest"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/EmptyResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     options:
       consumes:
       - "application/json"
       produces:
       - "application/json"
-      responses:
-        200:
-          description: "200 response"
-          headers:
-            Access-Control-Allow-Origin:
-              type: "string"
-            Access-Control-Allow-Methods:
-              type: "string"
-            Access-Control-Allow-Headers:
-              type: "string"
+      responses: {}
   /queues/{id}:
     options:
       consumes:
@@ -622,6 +648,7 @@ definitions:
       version:
         type: "string"
         pattern: "^(\\d+\\.\\d+\\.\\d+)$"
+    title: "GET Version Response"
   ACE:
     type: "object"
     properties:
@@ -633,6 +660,7 @@ definitions:
         exclusiveMaximum: false
       network:
         type: "string"
+    title: "ACE object"
   ACLResponse:
     type: "object"
     properties:
@@ -640,6 +668,7 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/ACE"
+    title: "GET ACL Response"
   DidsResponse:
     type: "object"
     properties:
@@ -648,15 +677,17 @@ definitions:
         items:
           type: "object"
           properties:
-            behavior:
-              type: "string"
             did:
               type: "string"
+            behavior:
+              type: "string"
+    title: "GET Dids Response"
   ACLRequest:
     type: "object"
     properties:
       ace:
         $ref: "#/definitions/ACE"
+    title: "Used for PATCH /acl and /delete"
   ErrorResponse:
     type: "object"
     properties:
@@ -664,6 +695,7 @@ definitions:
         type: "array"
         items:
           type: "string"
+    title: "Standard Error Response"
   QueuesResponse:
     type: "object"
     properties:
@@ -672,16 +704,17 @@ definitions:
         items:
           type: "object"
           properties:
-            number:
-              type: "integer"
-              minimum: 0.0
-              exclusiveMinimum: true
             name:
               type: "string"
             id:
               type: "integer"
               minimum: 0.0
               exclusiveMinimum: true
+            number:
+              type: "integer"
+              minimum: 0.0
+              exclusiveMinimum: true
+    title: "GET Queues Response"
   ExtensionsRequest:
     type: "object"
     properties:
@@ -695,6 +728,7 @@ definitions:
             pattern: "^[a-zA-Z0-9 ]$"
           dnd:
             type: "boolean"
+    title: "Used for PATCH /extensions/id"
   QueuesRequest:
     type: "object"
     properties:
@@ -706,6 +740,7 @@ definitions:
             minLength: 2
             maxLength: 64
             pattern: "^[a-zA-Z0-9 ]$"
+    title: "Used for PATCH /queues/id"
   DidsRequest:
     type: "object"
     properties:
@@ -714,6 +749,7 @@ definitions:
         properties:
           behavior:
             type: "string"
+    title: "Used for PUT /dids/:did"
   Me:
     type: "object"
     properties:
@@ -723,13 +759,13 @@ definitions:
       pbx:
         type: "object"
         properties:
-          systemStatus:
+          state:
             type: "string"
             enum:
             - "green"
             - "failed"
             - "red"
-          state:
+          systemStatus:
             type: "string"
             enum:
             - "green"
@@ -741,8 +777,10 @@ definitions:
             - "green"
             - "failed"
             - "red"
+    title: "Me object"
   EmptyRequest:
     type: "object"
+    title: "Standard Empty Request"
   ExtensionsResponse:
     type: "object"
     properties:
@@ -751,17 +789,19 @@ definitions:
         items:
           type: "object"
           properties:
-            number:
-              type: "integer"
-              minimum: 0.0
-              exclusiveMinimum: true
             name:
               type: "string"
             id:
               type: "integer"
               minimum: 0.0
               exclusiveMinimum: true
+            number:
+              type: "integer"
+              minimum: 0.0
+              exclusiveMinimum: true
             dnd:
               type: "boolean"
+    title: "GET Extensions Response"
   EmptyResponse:
     type: "object"
+    title: "Standard Empty Success Response"
