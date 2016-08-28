@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-08-28T12:33:05Z"
+  version: "2016-08-28T12:36:59Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -528,7 +528,16 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      responses: {}
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
   /queues/{id}:
     options:
       consumes:
