@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-08-28T12:36:59Z"
+  version: "2016-09-02T14:18:47Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -531,6 +531,8 @@ paths:
       responses:
         200:
           description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
           headers:
             Access-Control-Allow-Origin:
               type: "string"
@@ -749,7 +751,16 @@ definitions:
             minLength: 2
             maxLength: 64
             pattern: "^[a-zA-Z0-9 ]$"
+          number:
+            type: "integer"
+            minimum: 999.0
+            maximum: 10000.0
+            exclusiveMinimum: true
+            exclusiveMaximum: true
     title: "Used for PATCH /queues/id"
+  Empty:
+    type: "object"
+    title: "Standard Empty Success Response"
   DidsRequest:
     type: "object"
     properties:
