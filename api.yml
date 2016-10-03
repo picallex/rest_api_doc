@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-09-02T14:18:47Z"
+  version: "2016-10-03T22:47:05Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -419,6 +419,59 @@ paths:
           description: "404 response"
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /login:
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "Empty"
+        required: true
+        schema:
+          $ref: "#/definitions/Empty"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "401 response"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
   /me:
     get:
       consumes:
@@ -653,13 +706,6 @@ paths:
             Access-Control-Allow-Headers:
               type: "string"
 definitions:
-  VersionResponse:
-    type: "object"
-    properties:
-      version:
-        type: "string"
-        pattern: "^(\\d+\\.\\d+\\.\\d+)$"
-    title: "GET Version Response"
   ACE:
     type: "object"
     properties:
@@ -672,6 +718,19 @@ definitions:
       network:
         type: "string"
     title: "ACE object"
+  LoginResponse:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+    title: "POST login response"
+  VersionResponse:
+    type: "object"
+    properties:
+      version:
+        type: "string"
+        pattern: "^(\\d+\\.\\d+\\.\\d+)$"
+    title: "GET Version Response"
   ACLResponse:
     type: "object"
     properties:
@@ -707,6 +766,20 @@ definitions:
         items:
           type: "string"
     title: "Standard Error Response"
+  ExtensionsRequest:
+    type: "object"
+    properties:
+      settings:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+            minLength: 2
+            maxLength: 64
+            pattern: "^[a-zA-Z0-9 ]$"
+          dnd:
+            type: "boolean"
+    title: "Used for PATCH /extensions/id"
   QueuesResponse:
     type: "object"
     properties:
@@ -726,20 +799,9 @@ definitions:
               minimum: 0.0
               exclusiveMinimum: true
     title: "GET Queues Response"
-  ExtensionsRequest:
+  Empty:
     type: "object"
-    properties:
-      settings:
-        type: "object"
-        properties:
-          name:
-            type: "string"
-            minLength: 2
-            maxLength: 64
-            pattern: "^[a-zA-Z0-9 ]$"
-          dnd:
-            type: "boolean"
-    title: "Used for PATCH /extensions/id"
+    title: "Standard Empty Success Response"
   QueuesRequest:
     type: "object"
     properties:
@@ -758,9 +820,6 @@ definitions:
             exclusiveMinimum: true
             exclusiveMaximum: true
     title: "Used for PATCH /queues/id"
-  Empty:
-    type: "object"
-    title: "Standard Empty Success Response"
   DidsRequest:
     type: "object"
     properties:
@@ -801,6 +860,9 @@ definitions:
   EmptyRequest:
     type: "object"
     title: "Standard Empty Request"
+  EmptyResponse:
+    type: "object"
+    title: "Standard Empty Success Response"
   ExtensionsResponse:
     type: "object"
     properties:
@@ -822,6 +884,3 @@ definitions:
             dnd:
               type: "boolean"
     title: "GET Extensions Response"
-  EmptyResponse:
-    type: "object"
-    title: "Standard Empty Success Response"
