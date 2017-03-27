@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-10-11T19:32:46Z"
+  version: "2016-10-12T19:46:16Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
