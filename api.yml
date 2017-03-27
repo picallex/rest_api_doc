@@ -1,7 +1,7 @@
 ---
 swagger: "2.0"
 info:
-  version: "2016-10-12T19:46:16Z"
+  version: "2017-03-27T11:07:47Z"
   title: "v0"
 host: "api.vip2phone.net"
 basePath: "/v0"
@@ -861,7 +861,7 @@ definitions:
     properties:
       mask:
         type: "integer"
-        minimum: 16.0
+        minimum: 8.0
         maximum: 32.0
         exclusiveMinimum: false
         exclusiveMaximum: false
